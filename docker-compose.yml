@@ -1,0 +1,31 @@
+version: '3.7'
+# proxy network, for jenkins-nexus communication channel
+networks:
+  hostnet:
+    external: false
+    name: hostnet
+services:
+  jenkins:
+    image: jenkins/jenkins
+    container_name: jenkins
+    networks:
+      - hostnet
+    ports:
+      - 8080:8080
+    volumes:
+      - ./data/jenkins:/var/jenkins_home
+    links:
+      - nexus:nexus
+  nexus:
+    image: sonatype/nexus3
+    container_name: nexus
+    networks:
+      - hostnet
+    ports:
+      - 8081:8081
+      - 8082:8082 # for http docker registry (config needed in UI)
+    volumes:
+      - ./data/nexus:/nexus-data
+# start jenkins and nexus and connect them to same internal network jenkins can call nexus http://nexus:8081/service/rest/v1/components?repository=repo
+# docker-compose up -d
+# docker-compose down

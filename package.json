@@ -2,7 +2,7 @@
   "name": "nginx2",
   "version": "0.0.0",
   "scripts": {
-    "build": "ng build --prod --baseHref=test",
+    "build": "ng build --prod",
     "build2": "ng build --prod --baseHref=test2 --outputPath=test2",
     "build-both": "npm run build && npm run build2"
   },
